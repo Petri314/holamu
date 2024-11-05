@@ -1,170 +1,231 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Aptos+Narrow&display=swap');
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Aptos+Narrow&display=swap');
 
-body {
-  font-family: 'Aptos Narrow', sans-serif;
-}
+    body {
+      font-family: 'Aptos Narrow', sans-serif;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #87CEEB; /* Celeste */
-  color: white; /* Letras blancas */
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #87CEEB;
+      /* Celeste */
+      color: white;
+      /* Letras blancas */
+    }
 
-th {
-  background-color: #1E90FF; /* Celeste oscuro */
-}
+    th {
+      background-color: #1E90FF;
+      /* Celeste oscuro */
+    }
 
-table, th, td {
-  border: 1px solid black;
-  padding: 15px;
-  text-align: left;
-}
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      padding: 15px;
+      text-align: left;
+    }
 
-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 9px #999;
-}
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 9px #999;
+    }
 
-button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+    button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
 
-#totalContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    #totalContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-#total, #totalCajas {
-  font-size: 24px;
-  font-weight: bold;
-}
+    #total,
+    #totalCajas {
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.header-container img {
-  margin-bottom: 20px;
-}
+    .header-container img {
+      margin-bottom: 20px;
+    }
 
-@media screen and (max-width: 600px) {
-  .header-container {
-    flex-direction: column;
-  }
-  #totalContainer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  button {
-    width: 100%;
-  }
-}
+    @media screen and (max-width: 600px) {
+      .header-container {
+        flex-direction: column;
+      }
 
-h3 {
-  text-shadow: 3px 3px 0px rgba(0,0,0,0.2),
-               6px 6px 0px rgba(0,0,0,0.1);
-  color: #0c253f;
-  font-size: 1.5em;
-  position: relative;
-}
-</style>
+      #totalContainer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      table {
+        font-size: 12px;
+      }
+    }
+
+    h3 {
+      text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2),
+        6px 6px 0px rgba(0, 0, 0, 0.1);
+      color: #0c253f;
+      font-size: 1.5em;
+      position: relative;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="header-container">
-  <h3>Calculadora de Tramo</h3>
-  <!--
+  <div class="header-container">
+    <h3>Calculadora de Tramo</h3>
+    <!--
   <img src="https://www.seekpng.com/png/small/17-179960_walmart-chile-logo-1-big-rig-freewheeling-walmart.png" alt="Logo de Walmart Chile" width="100px;">
   -->
-</div>
+  </div>
 
-<table id="myTable">
-  <tr>
-    <th>Cámara</th>
-    <th>Factor</th> 
-    <th>Total</th>
-  </tr>
-  <tr>
-    <td>Seco</td>
-    <td class="factor">0,6</td>
-    <td><input type="number" class="total" oninput="calculateTotal()"></td>
-  </tr>
-  <tr>
-    <td>Fiambrería</td>
-    <td class="factor">0,7</td>
-    <td><input type="number" class="total" oninput="calculateTotal()"></td>
-  </tr>
-  <tr>
-    <td>Pan/Veg</td>
-    <td class="factor">1</td>
-    <td><input type="number" class="total" oninput="calculateTotal()"></td>
-  </tr>
-  <tr>
-    <td>Carnes</td>
-    <td class="factor">1,3</td>
-    <td><input type="number" class="total" oninput="calculateTotal()"></td>
-  </tr>
-  <tr>
-    <td>Congelado</td>
-    <td class="factor">1,5</td>
-    <td><input type="number" class="total" oninput="calculateTotal()"></td>
-  </tr>
-</table>
+  
 
-<div id="totalContainer">
-  <p id="total">Total factor: </p>
-  <p id="totalCajas">Total cajas: </p>
-  <button onclick="clearFields()">Limpiar</button>
-</div>
+  <table id="detailedTable">
+    <tr>
+      <th>Cámara</th>
+      <th>Factor</th>
+      <th>Total</th>
+      <th>Ingreso</th>
+    </tr>
+    <tr>
+      <td>Seco</td>
+      <td class="factor">0,6</td>
+      <td id="secoTotal"></td>
+      <td><input type="number" class="total"></td>
+    </tr>
+    <tr>
+      <td>Fiambrería</td>
+      <td class="factor">0,7</td>
+      <td id="fiambreriaTotal"></td>
+      <td><input type="number" class="total"></td>
+    </tr>
+    <tr>
+      <td>Pan/Veg</td>
+      <td class="factor">1</td>
+      <td id="panVegTotal"></td>
+      <td><input type="number" class="total"></td>
+    </tr>
+    <tr>
+      <td>Carnes</td>
+      <td class="factor">1,3</td>
+      <td id="carnesTotal"></td>
+      <td><input type="number" class="total"></td>
+    </tr>
+    <tr>
+      <td>Congelado</td>
+      <td class="factor">1,5</td>
+      <td id="congeladoTotal"></td>
+      <td><input type="number" class="total"></td>
+    </tr>
+  </table>
 
-<script>
-function calculateTotal() {
-  var factors = document.getElementsByClassName('factor');
-  var totals = document.getElementsByClassName('total');
-  var totalFactor = 0;
-  var totalCajas = 0;
-  for (var i = 0; i < factors.length; i++) {
-    var factor = parseFloat(factors[i].textContent.replace(',', '.'));
-    var value = parseFloat(totals[i].value);
-    if (!isNaN(value)) {
-      totalFactor += value * factor;
-      totalCajas += value;
+  <div id="totalContainer">
+    <p id="total">Total factor: </p>
+    <p id="totalCajas">Total cajas: </p>
+    <button onclick="clearFields()">Limpiar</button>
+  </div>
+  <br>
+
+  <button onclick="guardarValores()">Guardar Valores</button>
+
+  <script>
+    let valoresSeco = [];
+    let valoresFiambreria = [];
+    let valoresPanVeg = [];
+    let valoresCarnes = [];
+    let valoresCongelado = [];
+
+    function guardarValores() {
+      var totals = document.getElementsByClassName('total');
+
+      if (totals[0].value) {
+        valoresSeco.push(parseInt(totals[0].value));
+        document.getElementById('secoTotal').textContent = valoresSeco.join(" + ") + " = " + valoresSeco.reduce((a, b) => a + b, 0);
+      }
+
+      if (totals[1].value) {
+        valoresFiambreria.push(parseInt(totals[1].value));
+        document.getElementById('fiambreriaTotal').textContent = valoresFiambreria.join(" + ") + " = " + valoresFiambreria.reduce((a, b) => a + b, 0);
+      }
+
+      if (totals[2].value) {
+        valoresPanVeg.push(parseInt(totals[2].value));
+        document.getElementById('panVegTotal').textContent = valoresPanVeg.join(" + ") + " = " + valoresPanVeg.reduce((a, b) => a + b, 0);
+      }
+
+      if (totals[3].value) {
+        valoresCarnes.push(parseInt(totals[3].value));
+        document.getElementById('carnesTotal').textContent = valoresCarnes.join(" + ") + " = " + valoresCarnes.reduce((a, b) => a + b, 0);
+      }
+
+      if (totals[4].value) {
+        valoresCongelado.push(parseInt(totals[4].value));
+        document.getElementById('congeladoTotal').textContent = valoresCongelado.join(" + ") + " = " + valoresCongelado.reduce((a, b) => a + b, 0);
+      }
+
+      // Actualizar el total de cajas y el total factor
+      var totalCajas = valoresSeco.reduce((a, b) => a + b, 0) +
+        valoresFiambreria.reduce((a, b) => a + b, 0) +
+        valoresPanVeg.reduce((a, b) => a + b, 0) +
+        valoresCarnes.reduce((a, b) => a + b, 0) +
+        valoresCongelado.reduce((a, b) => a + b, 0);
+
+      var totalFactor = valoresSeco.reduce((a, b) => a + b, 0) * 0.6 +
+        valoresFiambreria.reduce((a, b) => a + b, 0) * 0.7 +
+        valoresPanVeg.reduce((a, b) => a + b, 0) * 1 +
+        valoresCarnes.reduce((a, b) => a + b, 0) * 1.3 +
+        valoresCongelado.reduce((a, b) => a + b, 0) * 1.5;
+
+
+      document.getElementById('total').textContent = 'Total factor: ' + Math.round(totalFactor);
+      document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
     }
-  }
-  document.getElementById('total').textContent = 'Total factor: ' + Math.round(totalFactor);
-  document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
-}
 
-function clearFields() {
-  var totals = document.getElementsByClassName('total');
-  for (var i = 0; i < totals.length; i++) {
-    totals[i].value = '';
-  }
-  document.getElementById('total').textContent = 'Total factor: ';
-  document.getElementById('totalCajas').textContent = 'Total cajas: ';
-}
+    function clearFields() {
+      var totals = document.getElementsByClassName('total');
+      for (var i = 0; i < totals.length; i++) {
+        totals[i].value = '';
+      }
+    }
 </script>
 
+
 </body>
+
 </html>
