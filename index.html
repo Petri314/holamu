@@ -120,7 +120,7 @@
     <tr>
       <th>Cámara</th>
       <th>Factor</th>
-      <th>Total Cajas </th>
+      <th>Total</th>
       <th>Ingreso</th>
     </tr>
     <tr>
@@ -226,26 +226,31 @@
 </script>
 
 <style>
+  /* Ajuste de anchos para pantallas de PC */
   #detailedTable th:nth-child(3),
   #detailedTable td:nth-child(3) {
-    width: 150px; /* Ancho de la columna "Total" en PC */
-  }
-  #detailedTable th:nth-child(4),
-  #detailedTable td:nth-child(4) {
-    width: 100px; /* Ancho de la columna "Ingreso" en PC */
+    width: 100px; /* Nuevo ancho para la columna "Ingreso" */
   }
 
+  #detailedTable th:nth-child(4),
+  #detailedTable td:nth-child(4) {
+    width: 150px; /* Nuevo ancho para la columna "Total" */
+  }
+
+  /* Ajuste de anchos para dispositivos móviles */
   @media screen and (max-width: 600px) {
     #detailedTable th:nth-child(3),
     #detailedTable td:nth-child(3) {
-      width: 100px; /* Ancho de la columna "Total" en móvil */
+      width: 150px; /* Ancho ajustado para la columna "Ingreso" en móvil */
     }
+
     #detailedTable th:nth-child(4),
     #detailedTable td:nth-child(4) {
-      width: 150px; /* Ancho de la columna "Ingreso" en móvil */
+      width: 100px; /* Ancho ajustado para la columna "Total" en móvil */
     }
   }
 </style>
+
 
 
 
