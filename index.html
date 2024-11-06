@@ -253,17 +253,20 @@ function exportarExcel() {
     </tr>
   </table>
 
-  <div id="totalContainer">
-    <p id="total">Total factor: </p>
-    <p id="totalCajas">Total cajas: </p>
-  </div>
+  
   <br>
 
   <button onclick="guardarValores()">Guardar Valores</button>
   
 
-  <button onclick="exportarExcel()">Exportar a Excel</button>
+  
 
+  <div id="totalContainer">
+    <p id="total">Total factor: </p>
+    <p id="totalCajas">Total cajas: </p>
+  </div>
+
+  <button onclick="exportarExcel()">Exportar a Excel</button>
 
   <script>
     let valoresSeco = [];
