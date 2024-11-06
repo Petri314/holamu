@@ -276,9 +276,77 @@ function exportarExcel() {
     let valoresCongelado = [];
 
     function guardarValores() {
+  var totals = document.getElementsByClassName('total');
+
+  if (totals[0].value) {
+    valoresSeco.push(parseInt(totals[0].value));
+    document.getElementById('secoTotal').innerHTML = valoresSeco.join(" + ") + " = <strong>" + valoresSeco.reduce((a, b) => a + b, 0) + "</strong>";
+  }
+
+  if (totals[1].value) {
+    valoresFiambreria.push(parseInt(totals[1].value));
+    document.getElementById('fiambreriaTotal').innerHTML = valoresFiambreria.join(" + ") + " = <strong>" + valoresFiambreria.reduce((a, b) => a + b, 0) + "</strong>";
+  }
+
+  if (totals[2].value) {
+    valoresPanVeg.push(parseInt(totals[2].value));
+    document.getElementById('panVegTotal').innerHTML = valoresPanVeg.join(" + ") + " = <strong>" + valoresPanVeg.reduce((a, b) => a + b, 0) + "</strong>";
+  }
+
+  if (totals[3].value) {
+    valoresCarnes.push(parseInt(totals[3].value));
+    document.getElementById('carnesTotal').innerHTML = valoresCarnes.join(" + ") + " = <strong>" + valoresCarnes.reduce((a, b) => a + b, 0) + "</strong>";
+  }
+
+  if (totals[4].value) {
+    valoresCongelado.push(parseInt(totals[4].value));
+    document.getElementById('congeladoTotal').innerHTML = valoresCongelado.join(" + ") + " = <strong>" + valoresCongelado.reduce((a, b) => a + b, 0) + "</strong>";
+  }
+
+  // Actualizar el total de cajas y el total factor
+  var totalCajas = valoresSeco.reduce((a, b) => a + b, 0) +
+    valoresFiambreria.reduce((a, b) => a + b, 0) +
+    valoresPanVeg.reduce((a, b) => a + b, 0) +
+    valoresCarnes.reduce((a, b) => a + b, 0) +
+    valoresCongelado.reduce((a, b) => a + b, 0);
+
+  var totalFactor = valoresSeco.reduce((a, b) => a + b, 0) * 0.6 +
+    valoresFiambreria.reduce((a, b) => a + b, 0) * 0.7 +
+    valoresPanVeg.reduce((a, b) => a + b, 0) * 1 +
+    valoresCarnes.reduce((a, b) => a + b, 0) * 1.3 +
+    valoresCongelado.reduce((a, b) => a + b, 0) * 1.5;
+
+  document.getElementById('total').textContent = 'Total factor: ' + Math.round(totalFactor);
+  document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
+    
+  // Guardar los valores diarios y mostrar totales por período
+  guardarValoresDiarios();
+  clearFields();
+  mostrarTotalesPorPeriodo();
+}
 
 
-      guardarValoresDiarios();
+
+      function guardarValoresDiarios() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+  var yyyy = today.getFullYear();
+  var formattedDate = yyyy + mm + dd;
+
+  var totals = {
+    secoTotal: valoresSeco.reduce((a, b) => a + b, 0),
+    fiambreriaTotal: valoresFiambreria.reduce((a, b) => a + b, 0),
+    panVegTotal: valoresPanVeg.reduce((a, b) => a + b, 0),
+    carnesTotal: valoresCarnes.reduce((a, b) => a + b, 0),
+    congeladoTotal: valoresCongelado.reduce((a, b) => a + b, 0)
+  };
+
+  var storedData = JSON.parse(localStorage.getItem('dailyValues')) || {};
+  storedData[formattedDate] = totals;
+  localStorage.setItem('dailyValues', JSON.stringify(storedData));
+}
+
       clearFields();
       mostrarTotalesPorPeriodo();
       var totals = document.getElementsByClassName('total');
@@ -325,7 +393,7 @@ function exportarExcel() {
       document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
     
     clearFields();
-    }
+    
 
     function clearFields() {
       var totals = document.getElementsByClassName('total');
@@ -335,8 +403,45 @@ function exportarExcel() {
     }
 </script>
 
+
+
 <script>
+
+function sumarDatosPorPeriodo(periodo) {
+  var storedData = JSON.parse(localStorage.getItem('dailyValues')) || {};
+  var sumaTotales = {
+    secoTotal: 0,
+    fiambreriaTotal: 0,
+    panVegTotal: 0,
+    carnesTotal: 0,
+    congeladoTotal: 0
+  };
+
+  var ahora = new Date();
+  Object.keys(storedData).forEach(function(fecha) {
+    var date = new Date(fecha.slice(0, 4), fecha.slice(4, 6) - 1, fecha.slice(6, 8));
+    var diferenciaDias = (ahora - date) / (1000 * 60 * 60 * 24);
+
+    if ((periodo === 'dia' && diferenciaDias <= 1) ||
+        (periodo === 'semana' && diferenciaDias <= 7) ||
+        (periodo === 'mes' && diferenciaDias <= 30) ||
+        (periodo === 'año' && diferenciaDias <= 365)) {
+      sumaTotales.secoTotal += storedData[fecha].secoTotal;
+      sumaTotales.fiambreriaTotal += storedData[fecha].fiambreriaTotal;
+      sumaTotales.panVegTotal += storedData[fecha].panVegTotal;
+      sumaTotales.carnesTotal += storedData[fecha].carnesTotal;
+      sumaTotales.congeladoTotal += storedData[fecha].congeladoTotal;
+    }
+  });
+
+  return sumaTotales;
+}
+
   function mostrarTotalesPorPeriodo() {
+    document.addEventListener('DOMContentLoaded', (event) => {
+  mostrarTotalesPorPeriodo();
+});
+
   var totalesDia = sumarDatosPorPeriodo('dia');
   var totalesSemana = sumarDatosPorPeriodo('semana');
   var totalesMes = sumarDatosPorPeriodo('mes');
