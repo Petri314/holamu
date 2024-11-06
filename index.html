@@ -84,9 +84,17 @@ function exportarExcel() {
 
   XLSX.utils.book_append_sheet(wb, ws, "Detalle");
 
-  // Descargar el archivo Excel
-  XLSX.writeFile(wb, "detalle_calculadora.xlsx");
+  // Obtener la fecha actual en formato DDMMYYYY
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+  var yyyy = today.getFullYear();
+  var formattedDate = dd + mm + yyyy;
+
+  // Descargar el archivo Excel con la fecha actual en el nombre
+  XLSX.writeFile(wb, "detalle_calculadora_" + formattedDate + ".xlsx");
 }
+
 
 </script>
   
@@ -308,6 +316,8 @@ function exportarExcel() {
 
       document.getElementById('total').textContent = 'Total factor: ' + Math.round(totalFactor);
       document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
+    
+    clearFields();
     }
 
     function clearFields() {
