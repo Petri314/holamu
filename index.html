@@ -46,10 +46,35 @@ function exportarExcel() {
     ["", "", "Total cajas:", document.getElementById('totalCajas').textContent.split(': ')[1] || 0],
     ["Fecha de exportación:", new Date().toLocaleString()]
   ];
-  
+
   var ws = XLSX.utils.aoa_to_sheet(ws_data);
 
-  // Aplicar estilos básicos
+  // Aplicar estilos básicos y colores
+  var headerCellStyle = {
+    font: { bold: true, color: { rgb: "FFFFFF" } },
+    fill: { fgColor: { rgb: "1E90FF" } }, // Celeste oscuro
+    alignment: { horizontal: "center" }
+  };
+
+  var cellStyle = {
+    fill: { fgColor: { rgb: "87CEEB" } }, // Celeste
+    alignment: { horizontal: "center" }
+  };
+
+  var range = XLSX.utils.decode_range(ws['!ref']);
+  for (var R = range.s.r; R <= range.e.r; ++R) {
+    for (var C = range.s.c; C <= range.e.c; ++C) {
+      var cell_address = { c: C, r: R };
+      var cell_ref = XLSX.utils.encode_cell(cell_address);
+      if (!ws[cell_ref]) continue;
+      if (R === 0) {
+        ws[cell_ref].s = headerCellStyle; // Estilo para encabezados
+      } else {
+        ws[cell_ref].s = cellStyle; // Estilo para celdas
+      }
+    }
+  }
+
   ws['!cols'] = [
     {wch: 20}, // Ancho de la columna "Cámara"
     {wch: 10}, // Ancho de la columna "Factor"
