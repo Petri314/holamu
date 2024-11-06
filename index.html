@@ -276,6 +276,11 @@ function exportarExcel() {
     let valoresCongelado = [];
 
     function guardarValores() {
+
+
+      guardarValoresDiarios();
+      clearFields();
+      mostrarTotalesPorPeriodo();
       var totals = document.getElementsByClassName('total');
 
       if (totals[0].value) {
@@ -329,6 +334,45 @@ function exportarExcel() {
       }
     }
 </script>
+
+<script>
+  function mostrarTotalesPorPeriodo() {
+  var totalesDia = sumarDatosPorPeriodo('dia');
+  var totalesSemana = sumarDatosPorPeriodo('semana');
+  var totalesMes = sumarDatosPorPeriodo('mes');
+  var totalesAnio = sumarDatosPorPeriodo('año');
+
+  document.getElementById('totalesDia').innerHTML = `<h3>Totales del Día</h3>${generarTablaTotales(totalesDia)}`;
+  document.getElementById('totalesSemana').innerHTML = `<h3>Totales de la Semana</h3>${generarTablaTotales(totalesSemana)}`;
+  document.getElementById('totalesMes').innerHTML = `<h3>Totales del Mes</h3>${generarTablaTotales(totalesMes)}`;
+  document.getElementById('totalesAnio').innerHTML = `<h3>Totales del Año</h3>${generarTablaTotales(totalesAnio)}`;
+}
+
+function generarTablaTotales(totales) {
+  return `
+    <table>
+      <tr><th>Cámara</th><th>Total</th></tr>
+      <tr><td>Seco</td><td>${totales.secoTotal}</td></tr>
+      <tr><td>Fiambrería</td><td>${totales.fiambreriaTotal}</td></tr>
+      <tr><td>Pan/Veg</td><td>${totales.panVegTotal}</td></tr>
+      <tr><td>Carnes</td><td>${totales.carnesTotal}</td></tr>
+      <tr><td>Congelado</td><td>${totales.congeladoTotal}</td></tr>
+    </table>
+  `;
+}
+
+</script>
+
+
+
+<div id="totalesContainer">
+  <h2>Totales por Período</h2>
+  <div id="totalesDia"></div>
+  <div id="totalesSemana"></div>
+  <div id="totalesMes"></div>
+  <div id="totalesAnio"></div>
+</div>
+
 
 
 
