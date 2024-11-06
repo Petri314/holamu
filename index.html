@@ -3,7 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
   
 <style>
   /* Ajuste de anchos para pantallas de PC */
@@ -30,6 +31,29 @@
     }
   }
 </style>
+
+<script>
+  function exportarExcel() {
+    var wb = XLSX.utils.book_new();
+    var ws_data = [
+      ["Cámara", "Factor", "Total", "Ingreso"],
+      ["Seco", 0.6, document.getElementById('secoTotal').innerHTML, ""],
+      ["Fiambrería", 0.7, document.getElementById('fiambreriaTotal').innerHTML, ""],
+      ["Pan/Veg", 1, document.getElementById('panVegTotal').innerHTML, ""],
+      ["Carnes", 1.3, document.getElementById('carnesTotal').innerHTML, ""],
+      ["Congelado", 1.5, document.getElementById('congeladoTotal').innerHTML, ""],
+      ["", "", "Total factor:", document.getElementById('total').textContent.split(': ')[1]],
+      ["", "", "Total cajas:", document.getElementById('totalCajas').textContent.split(': ')[1]],
+      ["Fecha de exportación:", new Date().toLocaleString()]
+    ];
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    XLSX.utils.book_append_sheet(wb, ws, "Detalle");
+
+    // Descargar el archivo Excel
+    XLSX.writeFile(wb, "detalle_calculadora.xlsx");
+  }
+</script>
+
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Aptos+Narrow&display=swap');
@@ -194,6 +218,10 @@
   <br>
 
   <button onclick="guardarValores()">Guardar Valores</button>
+  
+
+  <button onclick="exportarExcel()">Exportar a Excel</button>
+
 
   <script>
     let valoresSeco = [];
@@ -207,27 +235,27 @@
 
       if (totals[0].value) {
         valoresSeco.push(parseInt(totals[0].value));
-        document.getElementById('secoTotal').textContent = valoresSeco.join(" + ") + " = " + valoresSeco.reduce((a, b) => a + b, 0);
+        document.getElementById('secoTotal').innerHTML = valoresSeco.join(" + ") + " = <strong>" + valoresSeco.reduce((a, b) => a + b, 0) + "</strong>";
       }
 
       if (totals[1].value) {
         valoresFiambreria.push(parseInt(totals[1].value));
-        document.getElementById('fiambreriaTotal').textContent = valoresFiambreria.join(" + ") + " = " + valoresFiambreria.reduce((a, b) => a + b, 0);
+        document.getElementById('fiambreriaTotal').innerHTML = valoresFiambreria.join(" + ") + " = <strong>" + valoresFiambreria.reduce((a, b) => a + b, 0) + "</strong>";
       }
 
       if (totals[2].value) {
         valoresPanVeg.push(parseInt(totals[2].value));
-        document.getElementById('panVegTotal').textContent = valoresPanVeg.join(" + ") + " = " + valoresPanVeg.reduce((a, b) => a + b, 0);
+        document.getElementById('panVegTotal').innerHTML = valoresPanVeg.join(" + ") + " = <strong>" + valoresPanVeg.reduce((a, b) => a + b, 0) + "</strong>";
       }
 
       if (totals[3].value) {
         valoresCarnes.push(parseInt(totals[3].value));
-        document.getElementById('carnesTotal').textContent = valoresCarnes.join(" + ") + " = " + valoresCarnes.reduce((a, b) => a + b, 0);
+        document.getElementById('carnesTotal').innerHTML = valoresCarnes.join(" + ") + " = <strong>" + valoresCarnes.reduce((a, b) => a + b, 0) + "</strong>";
       }
 
       if (totals[4].value) {
         valoresCongelado.push(parseInt(totals[4].value));
-        document.getElementById('congeladoTotal').textContent = valoresCongelado.join(" + ") + " = " + valoresCongelado.reduce((a, b) => a + b, 0);
+        document.getElementById('congeladoTotal').innerHTML = valoresCongelado.join(" + ") + " = <strong>" + valoresCongelado.reduce((a, b) => a + b, 0) + "</strong>";
       }
 
       // Actualizar el total de cajas y el total factor
@@ -243,7 +271,6 @@
         valoresCarnes.reduce((a, b) => a + b, 0) * 1.3 +
         valoresCongelado.reduce((a, b) => a + b, 0) * 1.5;
 
-
       document.getElementById('total').textContent = 'Total factor: ' + Math.round(totalFactor);
       document.getElementById('totalCajas').textContent = 'Total cajas: ' + totalCajas;
     }
@@ -255,6 +282,7 @@
       }
     }
 </script>
+
 
 
 
