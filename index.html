@@ -3,6 +3,34 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+<style>
+  /* Ajuste de anchos para pantallas de PC */
+  #detailedTable th:nth-child(3),
+  #detailedTable td:nth-child(3) {
+    width: 100px; /* Nuevo ancho para la columna "Ingreso" */
+  }
+
+  #detailedTable th:nth-child(4),
+  #detailedTable td:nth-child(4) {
+    width: 150px; /* Nuevo ancho para la columna "Total" */
+  }
+
+  /* Ajuste de anchos para dispositivos móviles */
+  @media screen and (max-width: 600px) {
+    #detailedTable th:nth-child(3),
+    #detailedTable td:nth-child(3) {
+      width: 150px; /* Ancho ajustado para la columna "Ingreso" en móvil */
+    }
+
+    #detailedTable th:nth-child(4),
+    #detailedTable td:nth-child(4) {
+      width: 200px; /* Ancho ajustado para la columna "Total" en móvil */
+    }
+  }
+</style>
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Aptos+Narrow&display=swap');
 
@@ -91,7 +119,7 @@
       }
 
       table {
-        font-size: 12px;
+        font-size: 15px;
       }
     }
 
@@ -103,6 +131,9 @@
       position: relative;
     }
   </style>
+
+
+
 </head>
 
 <body>
@@ -225,31 +256,6 @@
     }
 </script>
 
-<style>
-  /* Ajuste de anchos para pantallas de PC */
-  #detailedTable th:nth-child(3),
-  #detailedTable td:nth-child(3) {
-    width: 100px; /* Nuevo ancho para la columna "Ingreso" */
-  }
-
-  #detailedTable th:nth-child(4),
-  #detailedTable td:nth-child(4) {
-    width: 150px; /* Nuevo ancho para la columna "Total" */
-  }
-
-  /* Ajuste de anchos para dispositivos móviles */
-  @media screen and (max-width: 600px) {
-    #detailedTable th:nth-child(3),
-    #detailedTable td:nth-child(3) {
-      width: 150px; /* Ancho ajustado para la columna "Ingreso" en móvil */
-    }
-
-    #detailedTable th:nth-child(4),
-    #detailedTable td:nth-child(4) {
-      width: 100px; /* Ancho ajustado para la columna "Total" en móvil */
-    }
-  }
-</style>
 
 
 
