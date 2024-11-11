@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Aptos+Narrow&display=swap');
+
+body {
+  font-family: 'Aptos Narrow', sans-serif;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: #87CEEB;
+  color: white;
+}
+
+th {
+  background-color: #1E90FF;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 5px #0b4d23;
+}
+
+button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#totalContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#total, #totalCajas {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+  }
+
+  #totalContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  table {
+    font-size: 15px;
+  }
+}
+
+h3 {
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2), 6px 6px 0px rgba(0, 0, 0, 0.1);
+  color: #0c253f;
+  font-size: 1.5em;
+  position: relative;
+}
